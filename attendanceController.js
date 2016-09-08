@@ -81,7 +81,7 @@
                 vm.Message = "You're all set! We've checked you in :)";
                 vm.BUId = "";
                 vm.SecretCode = "";
-                vm.Response = "";
+                vm.PromptResponse = "";
             }, function errorCallback(response) {
                 vm.Message = "Oops, wrong secret code!";
                 vm.SecretCode = "";
