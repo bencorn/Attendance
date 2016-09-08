@@ -3,7 +3,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>EK127 Check In</title>
     <script src="jquery-min.js"></script>
     <script src="semantic-min.js"></script>
     <script src="angular.min.js"></script>
@@ -47,10 +48,19 @@
                             <input ng-model="vm.SecretCode" type="password" name="secret" placeholder="Secret Code">
                         </div>
                     </div>
+                    <div class="field">
+                        <label>What is the value of this expression: 0 <= quiz <= 10 ?</label>
+                        <input ng-model="vm.PromptResponse" type="text" placeholder="Enter your response here"/>
+                    </div>
+                    
                     <div ng-click="vm.CheckIn()" class="ui fluid large submit button">Check In</div>
                 </div>
 
-                <div ng-model="vm.Message" class="attendance response"></div>
+                <div ng-show="vm.Message !== ''" class="ui blue message">
+                    <p>
+                        <span ng-bind="vm.Message"></span>
+                    </p>
+                </div>
 
             </form>
         </div>
