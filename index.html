@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="jquery-min.js"></script>
+    <script src="semantic-min.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="attendance.js"></script>
+    <script src="attendanceController.js"></script>
+    <script src="site.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body ng-app="attendance" ng-controller="attendanceController as vm">
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui header">
+                <div class="content"><img src="EK127.png" class="ui fluid image"></div>
+            </h2>
+            <form class="ui large form">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <select ng-model="vm.Section" class="ui dropdown">
+                            <option value="B1">B1</option>
+                            <option value="B2">B2</option>
+                            <option value="B3">B3</option>
+                            <option value="B4">B4</option>
+                            <option value="B5">B5</option>
+                            <option value="B6">B6</option>
+                            <option value="B7">B7</option>
+                            <option value="B8">B8</option>
+                            <option value="B9">B9</option>
+                            <option value="BA">BA</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input ng-model="vm.BUId" type="text" name="id" placeholder="BU Identification Number">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input ng-model="vm.SecretCode" type="password" name="secret" placeholder="Secret Code">
+                        </div>
+                    </div>
+                    <div ng-click="vm.CheckIn()" class="ui fluid large submit button">Check In</div>
+                </div>
+
+                <div ng-model="vm.Message" class="attendance response"></div>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>

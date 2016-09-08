@@ -1,0 +1,20 @@
+﻿body {
+    background: linear-gradient(to bottom, rgb(16, 21, 49), rgba(9,12,37,1));
+}
+body > .grid {
+    height: 100%;
+}
+.image {
+    margin-top: -100px;
+}
+.column {
+    max-width: 450px;
+}
+.submit.button{
+    background: #101531;
+    color: white;
+}
+.submit.button:hover{
+    background: #090c26;
+    color: white;
+}
