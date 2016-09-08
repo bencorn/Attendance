@@ -1,0 +1,10 @@
+﻿body {
+    background: linear-gradient(to bottom, rgb(16, 21, 49), rgba(9,12,37,1));
+    padding-left: 10px;
+    padding-right: 10px;
+}
+body > .grid {
+height: 100%;}
+
+.column {
+}
