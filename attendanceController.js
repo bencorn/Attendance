@@ -15,6 +15,13 @@
 
         $(function () {
             $('.ui.dropdown').dropdown('set selected', 'B1');
+
+            if (vm.Admin === true) {
+                $http.get("https://www.inviodev.com/api/attendance/code")
+                .then(function (response) {
+                    vm.SecretCode = JSON.parse(response.data);
+                })
+            }
         })
 
         $('.ui.progress').progress({
@@ -58,6 +65,13 @@
         };
 
         vm.Message = "";
+
+        vm.SaveCode = function () {
+            var payload = {SecretCode: vm.SecretCode}
+            $http.post("https://www.inviodev.com/api/attendance/code", payload)
+            .then(function () {
+            });
+        }
 
         vm.CheckIn = function () {
             var payload = {Section: vm.Section, BUId: vm.BUId, SecretCode: vm.SecretCode, PromptResponse: vm.PromptResponse };

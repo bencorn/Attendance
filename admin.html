@@ -20,6 +20,14 @@
     <div class="ui center aligned middle aligned grid">
         <div ng-model="vm.Admin" ng-init="vm.Admin = true" class="eight wide column">
             <div class="ui segment">
+                <div class="ui form">
+                    <div class="ui fluid action input">
+                        <input type="text" ng-model="vm.SecretCode" placeholder="Change secret code" />
+                        <button ng-click="vm.SaveCode()" class="ui blue button">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment">
                 <div style="text-align: right;">
                     <div class="field">
                         <select ng-model="vm.Section" class="ui dropdown">
@@ -44,7 +52,7 @@
                     </div>
 
                     <div class="eight wide column">
-                        <div ng-repeat="x in vm.Responses" class="ui blue message">
+                        <div ng-repeat="x in vm.Responses|limitTo:5" class="ui blue message">
                             <div class="header">
                                 {{x.BUId}}
                             </div>
