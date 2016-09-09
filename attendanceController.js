@@ -67,17 +67,20 @@
         vm.Message = "";
 
         vm.SaveCode = function () {
-            var payload = {SecretCode: vm.SecretCode}
+            var payload = { SecretCode: vm.SecretCode }
+            $.blockUI({ message: '<div class="ui active dimmer"><div class="ui loader"></div></div>' });
             $http.post("https://www.inviodev.com/api/attendance/code", payload)
             .then(function () {
+                $.unblockUI();
             });
         }
 
         vm.CheckIn = function () {
             var payload = {Section: vm.Section, BUId: vm.BUId, SecretCode: vm.SecretCode, PromptResponse: vm.PromptResponse };
-
+            $.blockUI({ message: '<div class="ui active dimmer"><div class="ui loader"></div></div>' });
             $http.post("https://www.inviodev.com/api/attendance/checkin", payload)
             .then(function successCallback(response) {
+                $.unblockUI();
                 vm.Message = "You're all set! We've checked you in :)";
                 vm.BUId = "";
                 vm.SecretCode = "";
@@ -86,9 +89,7 @@
                 vm.Message = "Oops, wrong secret code!";
                 vm.SecretCode = "";
             });
-        };
-        
-
+        };       
     }
 
 })();
