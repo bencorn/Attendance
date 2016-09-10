@@ -13,6 +13,7 @@
 
         vm.Message = "";
         vm.Problems = [];
+        vm.Responses = [];
 
         $(function () {
             $('.ui.dropdown').dropdown('set selected', 'B1');
@@ -31,6 +32,7 @@
                 hljs.initHighlightingOnLoad();
             }
 
+
         })
 
         vm.Message = "";
@@ -40,20 +42,20 @@
         });
 
         $scope.$watch('vm.Section', function () {
-            //if (vm.Admin === true) {
-            //    var payload = { Section: vm.Section };
+            if (vm.Admin === true) {
+                var payload = { Section: vm.Section };
 
-            //    $http.post('https://www.inviodev.com/api/attendance/responses', payload)
-            //    .then(function successCallback(response) {
-            //        vm.Responses = JSON.parse(response.data);
+                $http.post('https://www.inviodev.com/api/problems/responses', payload)
+                .then(function successCallback(response) {
+                    vm.Responses = JSON.parse(response.data);
 
-            //        $('.ui.progress').progress({
-            //            percent: vm.Responses.length
-            //        });
-            //    }, function errorCallback(response) {
+                    $('.ui.progress').progress({
+                        percent: vm.Responses.length
+                    });
+                }, function errorCallback(response) {
 
-            //    });
-            //}
+                });
+            }
 
         });
 
@@ -96,18 +98,17 @@
         }
 
         vm.CheckIn = function () {
-            var payload = {Section: vm.Section, BUId: vm.BUId, SecretCode: vm.SecretCode, PromptResponse: vm.PromptResponse };
+            var payload = {Section: vm.Section, BUId: vm.BUId, Problems: vm.Problems };
             $.blockUI({ message: '<div class="ui active dimmer"><div class="ui loader"></div></div>' });
-            $http.post("https://www.inviodev.com/api/attendance/checkin", payload)
+            $http.post("https://www.inviodev.com/api/problems/submit", payload)
             .then(function successCallback(response) {
                 $.unblockUI();
+                $('.ui.stacked.segment').slideUp();
                 vm.Message = "You're all set! We've checked you in :)";
                 vm.BUId = "";
-                vm.SecretCode = "";
-                vm.PromptResponse = "";
             }, function errorCallback(response) {
-                vm.Message = "Oops, wrong secret code!";
-                vm.SecretCode = "";
+                $.unblockUI();
+                vm.Message = "";
             });
         };       
     }

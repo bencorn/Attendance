@@ -50,20 +50,27 @@
                 </div>
             </div>
             <div class="ui tab segment" data-tab="second">
-                <div style="text-align: right;">
-                    <div class="field">
-                        <select ng-model="vm.Section" class="ui dropdown">
-                            <option value="B1">B1</option>
-                            <option value="B2">B2</option>
-                            <option value="B3">B3</option>
-                            <option value="B4">B4</option>
-                            <option value="B5">B5</option>
-                            <option value="B6">B6</option>
-                            <option value="B7">B7</option>
-                            <option value="B8">B8</option>
-                            <option value="B9">B9</option>
-                            <option value="BA">BA</option>
-                        </select>
+                <div class="ui form">
+                    <div class="two fields">
+                        <div class="field">
+                            <select ng-model="vm.Section" class="ui fluid dropdown">
+                                <option value="B1">B1</option>
+                                <option value="B2">B2</option>
+                                <option value="B3">B3</option>
+                                <option value="B4">B4</option>
+                                <option value="B5">B5</option>
+                                <option value="B6">B6</option>
+                                <option value="B7">B7</option>
+                                <option value="B8">B8</option>
+                                <option value="B9">B9</option>
+                                <option value="BA">BA</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <select ng-model="vm.SelectedQuestion" class="ui fluid dropdown question">
+                                <option ng-repeat="option in vm.Problems" value="{{option.ProblemId}}">{{option.ProblemTitle}}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="ui divider"></div>
@@ -74,9 +81,9 @@
                     </div>
 
                     <div class="eight wide column">
-                        <div ng-repeat="x in vm.Responses|limitTo:5" class="ui blue message">
+                        <div ng-repeat="x in vm.Responses|limitTo:4 | filter: {ProblemId: vmSelectedQuestion}" class="ui blue message">
                             <div class="header">
-                                {{x.BUId}}
+                                {{x.BUId + ' - ' + x.PromptTitle}}
                             </div>
                             <p>
                                 {{x.PromptResponse}}
