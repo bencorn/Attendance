@@ -24,8 +24,11 @@
             if (vm.Admin !== true) {
                 LoadProblems();
                 setTimeout(function(){
-                    $(".prob.owl").owlCarousel();
-                },3000);
+                    $(".prob.owl").owlCarousel({
+                        singleItem: true
+                    });
+                }, 1000);
+                hljs.initHighlightingOnLoad();
             }
 
         })
@@ -57,12 +60,10 @@
         //var t = setInterval(SaveChanges, 10000);
 
         function LoadProblems() {
-            if (vm.Admin === true) {
-                $http.get('https://www.inviodev.com/api/problems')
-                .then(function (response) {
-                    vm.Problems = JSON.parse(response.data);
-                });
-            }
+            $http.get('https://www.inviodev.com/api/problems')
+            .then(function (response) {
+                vm.Problems = JSON.parse(response.data);
+            });
         };
 
         vm.AddNewProblem = function () {
