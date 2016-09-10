@@ -3,6 +3,7 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 150px;
+    overflow-x: hidden;
 }
 body > .grid {
 }
