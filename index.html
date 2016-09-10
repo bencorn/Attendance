@@ -13,6 +13,9 @@
     <script src="site.js"></script>
     <script src="blockUI.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" />
+    <link rel="stylesheet" href="owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="owl-carousel/owl.theme.css">
+    <script src="owl-carousel/owl.carousel.js"></script>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body ng-app="attendance" ng-controller="attendanceController as vm">
@@ -43,15 +46,13 @@
                             <input ng-model="vm.BUId" type="text" name="id" placeholder="BU Identification Number">
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="lock icon"></i>
-                            <input ng-model="vm.SecretCode" type="password" name="secret" placeholder="Secret Code">
+
+                    <div class="owl-carousel prob owl">
+                        <div ng-repeat="x in vm.Problems" class="problem card">
+                            <label ng-bind="x.ProblemTitle"></label>
+                            <span ng-bind="x.ProblemDescription"></span>
+                            <input ng-model="x.ProblemResponse" type="text" />
                         </div>
-                    </div>
-                    <div class="field">
-                        <label>What is the value of this expression: 0 <= quiz <= 10 ?</label>
-                        <input ng-model="vm.PromptResponse" type="text" placeholder="Enter your response here"/>
                     </div>
                     
                     <div ng-click="vm.CheckIn()" class="ui fluid large submit button">Check In</div>

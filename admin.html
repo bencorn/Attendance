@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>EK127 Check In</title>
     <script src="jquery-min.js"></script>
-    <script src="raphael-2.1.4.min.js"></script>
-    <script src="justgage.js"></script>
+    <script src="blockUI.js"></script>
     <script src="semantic-min.js"></script>
     <script src="angular.min.js"></script>
     <script src="attendance.js"></script>
@@ -16,18 +15,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" />
     <link rel="stylesheet" href="admin.css" />
 </head>
-<body ng-app="attendance" ng-controller="attendanceController as vm">
-    <div class="ui center aligned middle aligned grid">
+<body class="admin" ng-app="attendance" ng-controller="attendanceController as vm">
+    <div class="ui center aligned grid">
         <div ng-model="vm.Admin" ng-init="vm.Admin = true" class="eight wide column">
-            <div class="ui segment">
+            <div class="ui pointing secondary menu">
+                <a class="item active" data-tab="first">Questions</a>
+                <a class="item" data-tab="second">Responses</a>
+            </div>
+            <div class="ui tab segment active problems" data-tab="first">
                 <div class="ui form">
-                    <div class="ui fluid action input">
-                        <input type="text" ng-model="vm.SecretCode" placeholder="Change secret code" />
-                        <button ng-click="vm.SaveCode()" class="ui blue button">Save</button>
-                    </div>
+                    <table ng-show="vm.Problems.length > 0" class="ui basic table">
+                        <thead>
+                            <tr>
+                                <th>Problem Title</th>
+                                <th>Prompt</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="x in vm.Problems">
+                                <td><input ng-model="x.ProblemTitle" type="text" /></td>
+                                <td><code><textarea ng-model="x.ProblemDescription" rows="1"></textarea></code></td>
+                                <td class="right aligned">
+                                    <button ng-click="vm.RemoveProblem(x.ProblemId)" class="ui mini button icon red">
+                                        <i class="trash icon"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-show="vm.Problems.length < 4" class="ui divider"></div>
+                    <button ng-show="vm.Problems.length < 4" ng-click="vm.AddNewProblem()" type="button" class="ui button blue fluid">Add New Problem</button>
+                    <button ng-click="vm.SaveChanges()" class="ui basic blue button save btn">Save</button>
                 </div>
             </div>
-            <div class="ui segment">
+            <div class="ui tab segment" data-tab="second">
                 <div style="text-align: right;">
                     <div class="field">
                         <select ng-model="vm.Section" class="ui dropdown">
@@ -67,4 +89,9 @@
     </div>
 </body>
 </html>
-                                    
+
+<script type="text/javascript">
+    $('.menu .item')
+        .tab()
+    ;
+</script>                                    

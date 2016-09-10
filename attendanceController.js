@@ -12,65 +12,84 @@
         var vm = this;
 
         vm.Message = "";
+        vm.Problems = [];
 
         $(function () {
             $('.ui.dropdown').dropdown('set selected', 'B1');
 
             if (vm.Admin === true) {
-                $http.get("https://www.inviodev.com/api/attendance/code")
-                .then(function (response) {
-                    vm.SecretCode = JSON.parse(response.data);
-                })
+                LoadProblems();
             }
+
+            if (vm.Admin !== true) {
+                LoadProblems();
+                setTimeout(function(){
+                    $(".prob.owl").owlCarousel();
+                },3000);
+            }
+
         })
+
+        vm.Message = "";
 
         $('.ui.progress').progress({
             total: 30
         });
 
         $scope.$watch('vm.Section', function () {
-            if (vm.Admin === true) {
-                var payload = { Section: vm.Section };
+            //if (vm.Admin === true) {
+            //    var payload = { Section: vm.Section };
 
-                $http.post('https://www.inviodev.com/api/attendance/responses', payload)
-                .then(function successCallback(response) {
-                    vm.Responses = JSON.parse(response.data);
+            //    $http.post('https://www.inviodev.com/api/attendance/responses', payload)
+            //    .then(function successCallback(response) {
+            //        vm.Responses = JSON.parse(response.data);
 
-                    $('.ui.progress').progress({
-                        percent: vm.Responses.length
-                    });
-                }, function errorCallback(response) {
+            //        $('.ui.progress').progress({
+            //            percent: vm.Responses.length
+            //        });
+            //    }, function errorCallback(response) {
 
-                });
-            }
+            //    });
+            //}
 
         });
 
-        var t = setInterval(LoadResponses, 1000);
+        //var t = setInterval(SaveChanges, 10000);
 
-        function LoadResponses() {
+        function LoadProblems() {
             if (vm.Admin === true) {
-                var payload = { Section: vm.Section };
-
-                $http.post('https://www.inviodev.com/api/attendance/responses', payload)
-                .then(function successCallback(response) {
-                    vm.Responses = JSON.parse(response.data);
-                    $('.ui.progress').progress({
-                        percent: vm.Responses.length
-                    });
-                }, function errorCallback(response) {
-
+                $http.get('https://www.inviodev.com/api/problems')
+                .then(function (response) {
+                    vm.Problems = JSON.parse(response.data);
                 });
             }
         };
 
-        vm.Message = "";
+        vm.AddNewProblem = function () {
+            vm.Problems.push({ ProblemTitle: "", ProblemDescription: "", ProblemId: Math.random() });
+        }
 
-        vm.SaveCode = function () {
-            var payload = { SecretCode: vm.SecretCode }
+        vm.RemoveProblem = function (ProblemId) {
+            vm.Problems = vm.Problems.filter(function (item) {
+                return item.ProblemId !== ProblemId;
+            });
+
+            if (ProblemId >= 1) {
+                $http.post("https://www.inviodev.com/api/problems/delete", { ProblemId: ProblemId });
+            }
+        };
+
+        vm.SaveChanges = function () {
             $.blockUI({ message: '<div class="ui active dimmer"><div class="ui loader"></div></div>' });
-            $http.post("https://www.inviodev.com/api/attendance/code", payload)
-            .then(function () {
+            for (var i = 0; i < vm.Problems.length; i++) {
+                if (vm.Problems[i].ProblemId < 1) {
+                    vm.Problems[i].ProblemId = 0;
+                }
+            }
+
+            $http.post("https://www.inviodev.com/api/problems/save", { Problems: vm.Problems })
+            .then(function (response) {
+                LoadProblems();
                 $.unblockUI();
             });
         }
