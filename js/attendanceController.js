@@ -16,6 +16,7 @@
         vm.Responses = [];
 
         $(function () {
+            $.blockUI({ message: '<div class="ui active dimmer"><div class="ui loader"></div></div>' });
             $('.section.dropdown').dropdown('set selected', 'B1');
             $('.filter.dropdown').dropdown('set selected', '5');
 
@@ -31,9 +32,9 @@
                     });
                 }, 1000);
                 hljs.initHighlightingOnLoad();
-
+                $.unblockUI();
             }
-
+            $.unblockUI();
 
         })
 
@@ -61,7 +62,18 @@
 
         });
 
-        //var t = setInterval(SaveChanges, 10000);
+        function LoadResponses() {
+            $http.post('https://www.inviodev.com/api/problems/responses', payload)
+                .then(function successCallback(response) {
+                    vm.Responses = JSON.parse(response.data);
+
+                    $('.ui.progress').progress({
+                        percent: vm.Responses.length
+                    });
+                });
+        };
+                      
+        var t = setInterval(LoadResponses, 1500);
 
         function LoadProblems() {
             $http.get('https://www.inviodev.com/api/problems')
