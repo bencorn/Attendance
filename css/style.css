@@ -33,3 +33,23 @@ body > .grid {
 .owl-theme .owl-controls .owl-page span {
     background: #101530;
 }
+
+@-moz-viewport{
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
+
+@-ms-viewport{
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
+
+@-webkit-viewport{
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
+
+@viewport{
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
