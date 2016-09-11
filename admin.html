@@ -2,18 +2,25 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>EK127 Check In</title>
-    <script src="jquery-min.js"></script>
-    <script src="blockUI.js"></script>
-    <script src="semantic-min.js"></script>
-    <script src="angular.min.js"></script>
-    <script src="attendance.js"></script>
-    <script src="attendanceController.js"></script>
-    <script src="site.js"></script>
+    <!-- Scripts -->
+    <script src="libraries/jquery-min.js"></script>
+    <script src="libraries/blockUI.js"></script>
+    <script src="libraries/semantic-min.js"></script>
+    <script src="libraries/angular.min.js"></script>
+    <script src="js/attendance.js"></script>
+    <script src="js/attendanceController.js"></script>
+    <script src="js/site.js"></script>
+    <!-- End Scripts -->
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" />
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <!-- End Stylesheets -->
+
 </head>
 <body class="admin" ng-app="attendance" ng-controller="attendanceController as vm">
     <div class="ui center aligned grid">
@@ -51,9 +58,9 @@
             </div>
             <div class="ui tab segment" data-tab="second">
                 <div class="ui form">
-                    <div class="two fields">
-                        <div class="field">
-                            <select ng-model="vm.Section" class="ui fluid dropdown">
+                    <div class="three fields">
+                        <div class="four wide field">
+                            <select ng-model="vm.Section" class="ui fluid dropdown section">
                                 <option value="B1">B1</option>
                                 <option value="B2">B2</option>
                                 <option value="B3">B3</option>
@@ -66,9 +73,17 @@
                                 <option value="BA">BA</option>
                             </select>
                         </div>
-                        <div class="field">
+                        <div class="ten wide field">
                             <select ng-model="vm.SelectedQuestion" class="ui fluid dropdown question">
                                 <option ng-repeat="option in vm.Problems" value="{{option.ProblemId}}">{{option.ProblemTitle}}</option>
+                            </select>
+                        </div>
+                        <div class="two wide field">
+                            <select ng-model="vm.ResponseCount" class="ui fluid dropdown filter count">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
                             </select>
                         </div>
                     </div>
@@ -80,10 +95,10 @@
                         <div class="label">{{vm.Responses.length + ' Students have checked in.'}}</div>
                     </div>
 
-                    <div class="eight wide column">
-                        <div ng-repeat="x in vm.Responses|limitTo:4 | filter: {ProblemId: vmSelectedQuestion}" class="ui blue message">
+                    <div class="four wide column">
+                        <div ng-repeat="x in vm.Responses|limitTo:vm.ResponseCount | filter: {ProblemId: vm.SelectedQuestion}" class="ui blue message">
                             <div class="header">
-                                {{x.BUId + ' - ' + x.PromptTitle}}
+                                {{x.BUId}}
                             </div>
                             <p>
                                 {{x.PromptResponse}}
