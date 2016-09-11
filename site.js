@@ -1,5 +1,0 @@
-﻿$(function () {
-    $('select')
-        .dropdown()
-    ;
-});
