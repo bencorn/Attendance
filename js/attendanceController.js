@@ -65,6 +65,7 @@
         var t = setInterval(LoadResponses, 1500);
 
         function LoadResponses() {
+            var payload = { Section: vm.Section };
             $http.post('https://www.inviodev.com/api/problems/responses', payload)
                 .then(function successCallback(response) {
                     vm.Responses = JSON.parse(response.data);
