@@ -97,9 +97,6 @@
 
                     <div class="four wide column">
                         <div ng-repeat="x in vm.Responses|limitTo:vm.ResponseCount | filter: {ProblemId: vm.SelectedQuestion}" class="ui blue message">
-                            <div class="header">
-                                {{x.BUId}}
-                            </div>
                             <p>
                                 {{x.PromptResponse}}
                             </p>

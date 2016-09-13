@@ -61,6 +61,8 @@
             }
 
         });
+                            
+        var t = setInterval(LoadResponses, 1500);
 
         function LoadResponses() {
             $http.post('https://www.inviodev.com/api/problems/responses', payload)
@@ -72,8 +74,6 @@
                     });
                 });
         };
-                      
-        var t = setInterval(LoadResponses, 1500);
 
         function LoadProblems() {
             $http.get('https://www.inviodev.com/api/problems')
@@ -112,14 +112,13 @@
         }
 
         vm.CheckIn = function () {
-            var payload = {Section: vm.Section, BUId: vm.BUId, Problems: vm.Problems };
+            var payload = {Section: vm.Section, Problems: vm.Problems };
             $.blockUI({ message: '<div class="ui active dimmer"><div class="ui loader"></div></div>' });
             $http.post("https://www.inviodev.com/api/problems/submit", payload)
             .then(function successCallback(response) {
                 $.unblockUI();
                 $('.ui.stacked.segment').slideUp();
                 vm.Message = "You're all set! We've checked you in :)";
-                vm.BUId = "";
             }, function errorCallback(response) {
                 $.unblockUI();
                 vm.Message = "";
